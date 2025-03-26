@@ -10,6 +10,7 @@ function App() {
   const [names, setNames] = useState<{}>();
   const [selectedOption, setSelectedOption] = useState<SingleValue<Option>>();
   const [choices, setChoices] = useState<Pokemon[]>([]);
+  const [finished, setFinished] = useState<boolean>(false)
 
   interface Pokemon {
     name: string;
@@ -117,38 +118,69 @@ function App() {
     }
   };
 
+  useEffect(() => {
+    if (choices.length === 6) {
+      setFinished(true)
+    }
+  }, [choices])
+
   // useEffect(() => {
   //   console.log(choices)
   // }, [choices])
+  const labels = ["Name", "ID", "Height", "Weight", "Type 1", "Type 2"]
 
 
   return (
-    <div className='flex flex-col justify-center items-center'>
-      <div className='w-1/3 border border-gray-300 rounded-lg shadow-lg p-2'>
-      Guess the daily Pokémon! It's {pokemon?.name}.
+
+    
+    <div className="flex flex-col justify-center items-center w-full">
+
+      <div className="w-1/3 border border-gray-300 rounded-lg shadow-lg p-2 text-center">
+        Guess the daily Pokémon! It's {pokemon?.name}.
       </div>
-      <div>
-        {choices.map((choice, index) => (
-          <Guess
-            key={index}
-            name={pokemon?.name || ''}
-            id={pokemon?.id || 0}
-            height={pokemon?.height || 0}
-            weight={pokemon?.weight || 0}
-            types={pokemon?.types || []}
-            choice={choice}
-          />
-        ))}
+  
+  
+      {finished ? '' : (
+      <Select
+        className="w-1/4 border border-gray-300 rounded-lg shadow-lg p-2 mt-4"
+        defaultValue={selectedOption}
+        onChange={handleChoice}
+        options={names as []}
+        styles={customStyles}
+      />)
+      }
+
+      {/* Main Grid Container */}
+      <div className="w-2/3 mt-4">
+        {/* Headings Row */}
+        <div className="grid grid-cols-6 gap-4 text-center font-semibold">
+          {labels.map((label, index) => (
+            <h4 key={index} className="text-sm">{label}</h4>
+          ))}
+        </div>
+  
+        <div className="grid grid-cols-6 gap-4">
+          {choices.map((choice, rowIndex) =>
+            choice ? (
+              choice.name && (
+                <Guess
+                  key={rowIndex}
+                  name={pokemon?.name || ""}
+                  id={pokemon?.id || 0}
+                  height={pokemon?.height || 0}
+                  weight={pokemon?.weight || 0}
+                  types={pokemon?.types || []}
+                  choice={choice}
+                />
+              )
+            ) : []
+          )}
+        </div>
       </div>
-    <Select
-      className="w-1/4 border border-gray-300 rounded-lg shadow-lg p-2"
-      defaultValue={selectedOption}
-      onChange={handleChoice}
-      options={names as []}
-      styles={customStyles}
-        />
     </div>
-  )
+  );
+  
+  
 }
 
 export default App

@@ -24,7 +24,6 @@ const Guess: React.FC<GuessProps> = ({name, id, height, weight, types, choice}) 
     const cardValues = [choice.name, choice.id, choice.height, choice.weight, choice.types[0]?.type.name, choice.types[1]?.type.name]
     const targetValues = [name, id, height, weight, types[0]?.type.name, types[1]?.type.name]
     const setColour = (index: number) => {
-
       if (cardValues[index] === targetValues[index])
       {
         return true
@@ -33,23 +32,12 @@ const Guess: React.FC<GuessProps> = ({name, id, height, weight, types, choice}) 
     }
 
     return (
-      <div className='guess flex flex-row'>
-        {cardValues.map((value, index) => 
-        ( value !== undefined ? (
-            <Card 
-              key={index} 
-              value={value.toString()} 
-              colour={setColour(index)}/>
-          ) : (
-            <Card 
-              key={index} 
-              value={value}
-              colour={setColour(index)}/>
-          )
-        )
-      )}
-      </div>  
-    )
+    <>
+      {cardValues.map((value, index) => (
+        <Card key={index} value={value?.toString() || ''} colour={setColour(index)} />
+      ))}
+    </>
+  );
 
     }
 }
