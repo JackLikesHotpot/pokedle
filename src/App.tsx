@@ -9,7 +9,7 @@ function App() {
   const [pokemon, setPokemon] = useState<Pokemon>();
   const [names, setNames] = useState<{}>();
   const [selectedOption, setSelectedOption] = useState<SingleValue<Option>>();
-  const [choice, setChoice] = useState<Pokemon>();
+  const [choices, setChoices] = useState<Pokemon[]>([]);
 
   interface Pokemon {
     name: string;
@@ -56,7 +56,7 @@ function App() {
   const getPokemon = async (name: string) => {
     try {
       const response = await api.getPokemonByName(name)
-      console.log(response)
+      // console.log(response)
       return response
     }
     
@@ -94,40 +94,52 @@ function App() {
       if (selectedOption) {
         try {
         const response = await getPokemon(selectedOption.value)
-        setChoice(response)
+        if (response) {
+          setChoices((prevChoices) => {
+            if (prevChoices.length < 6) {
+              return [...prevChoices, response]
+            }
+            return prevChoices
+          })
+      }
       }
       catch (error) {
         return error
       }
     }
   }
-
   fetchChoice();
   }, [selectedOption])
 
   const handleChoice = (option: SingleValue<Option>) => {
     if (option) {
       setSelectedOption(option);
-    } 
+    }
   };
+
+  // useEffect(() => {
+  //   console.log(choices)
+  // }, [choices])
+
 
   return (
     <div className='flex flex-col justify-center items-center'>
       <div className='w-1/3 border border-gray-300 rounded-lg shadow-lg p-2'>
       Guess the daily Pokémon! It's {pokemon?.name}.
       </div>
-      {selectedOption && pokemon && choice ?
       <div>
-      <Guess
-        name={pokemon.name}
-        id={pokemon.id}
-        height={pokemon.height}
-        weight={pokemon.weight}
-        types={pokemon.types}
-        choice={choice}
-      />
+        {choices.map((choice, index) => (
+          <Guess
+            key={index}
+            name={pokemon?.name || ''}
+            id={pokemon?.id || 0}
+            height={pokemon?.height || 0}
+            weight={pokemon?.weight || 0}
+            types={pokemon?.types || []}
+            choice={choice}
+          />
+        ))}
       </div>
-      : ''}
     <Select
       className="w-1/4 border border-gray-300 rounded-lg shadow-lg p-2"
       defaultValue={selectedOption}
