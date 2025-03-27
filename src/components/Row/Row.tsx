@@ -20,9 +20,19 @@ interface Type {
 
 const Guess: React.FC<GuessProps> = ({name, id, height, weight, types, choice}) => {
 
+  const getGeneration = (id: number): number => {
+    if (id < 152) {
+      return 1;
+    }
+    else if (id < 252) {
+      return 2;
+    }
+    return 3;
+  }
+
   if (choice) {
-    const cardValues = [choice.name, choice.id, choice.height, choice.weight, choice.types[0]?.type.name, choice.types[1]?.type.name]
-    const targetValues = [name, id, height, weight, types[0]?.type.name, types[1]?.type.name]
+    const cardValues = [choice.name, getGeneration(choice.id), choice.height, choice.weight, choice.types[0]?.type.name, choice.types[1]?.type.name]
+    const targetValues = [name, getGeneration(id), height, weight, types[0]?.type.name, types[1]?.type.name]
     const setColour = (index: number) => {
       if (cardValues[index] === targetValues[index])
       {
