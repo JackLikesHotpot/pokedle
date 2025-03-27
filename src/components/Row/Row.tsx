@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import Card from '../Card/Card'
 
 interface PokemonBase {
@@ -7,6 +7,7 @@ interface PokemonBase {
   height: number;
   weight: number;
   types: Type[];
+  sprite: string;
 }
 
 interface GuessProps extends PokemonBase {
@@ -18,7 +19,7 @@ interface Type {
   type: {name: string, url: string;}
 }
 
-const Guess: React.FC<GuessProps> = ({name, id, height, weight, types, choice}) => {
+const Guess: React.FC<GuessProps> = ({name, id, height, weight, types, sprite, choice}) => {
 
   const getGeneration = (id: number): number => {
     if (id < 152) {
@@ -31,8 +32,8 @@ const Guess: React.FC<GuessProps> = ({name, id, height, weight, types, choice}) 
   }
 
   if (choice) {
-    const cardValues = [choice.name, getGeneration(choice.id), choice.height, choice.weight, choice.types[0]?.type.name, choice.types[1]?.type.name]
-    const targetValues = [name, getGeneration(id), height, weight, types[0]?.type.name, types[1]?.type.name]
+    const cardValues = [choice.sprite, choice.name, getGeneration(choice.id), choice.height, choice.weight, choice.types[0]?.type.name, choice.types[1]?.type.name]
+    const targetValues = [sprite, name, getGeneration(id), height, weight, types[0]?.type.name, types[1]?.type.name]
     const setColour = (index: number) => {
       if (cardValues[index] === targetValues[index])
       {

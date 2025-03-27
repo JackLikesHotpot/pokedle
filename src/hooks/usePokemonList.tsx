@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { NamedAPIResource, PokemonClient } from "pokenode-ts";
-import capitaliseFirstLetter from "../helpers/capitaliseFirstLetter";
+import { capitaliseFirstLetter } from "../helpers/capitaliseFirstLetter";
 
 const api = new PokemonClient();
 

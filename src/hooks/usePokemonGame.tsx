@@ -22,10 +22,17 @@ export const usePokemonGame = () => {
 
   // if choices reaches x numebr then mark game as finished
   useEffect(() => {
+    const lastChoice = choices[choices.length - 1]
+    if (lastChoice) {
+      if (lastChoice?.name === pokemon?.name) {
+        setFinished(true)
+      }
+    }
+
     if (choices.length === 6) {
       setFinished(true)
     }
-  }, [choices])
+  }, [choices, pokemon])
 
 
   // initial set up

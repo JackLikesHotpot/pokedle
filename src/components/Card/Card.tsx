@@ -1,4 +1,5 @@
 import React, {useState, useEffect} from 'react'
+import { capitaliseFirstLetter } from '../../helpers/capitaliseFirstLetter'
 
 interface CardType {
   value: string
@@ -12,15 +13,11 @@ const Card: React.FC<CardType> = ({ value, colour }) => {
   }
   const [isVisible, setVisible] = useState(false);
 
-  
-  const capitalizeFirstLetter = (str: string) => {
-    return String(str).charAt(0).toUpperCase() + String(str).slice(1);
-  }
-
   // Use useEffect to trigger opacity change after render
   useEffect(() => {
     setVisible(true);
   }, []);
+
   return (
     <div
       className={`card border border-gray-300 w-32 h-32 flex justify-center items-center 
@@ -29,7 +26,13 @@ const Card: React.FC<CardType> = ({ value, colour }) => {
         ${isVisible ? 'opacity-100' : 'opacity-0'}
         ${setColour(colour)} font-pixelify text-xl`}
     >
-      {value !== undefined ? capitalizeFirstLetter(value) : ''}
+      {value !== undefined ? 
+        (value.startsWith('http') ? (
+          <img src={value} alt='Image' className='image'/>
+        ) : (
+          capitaliseFirstLetter(value) 
+        )
+      ) : ''}
     </div>
   );
 

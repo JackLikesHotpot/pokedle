@@ -33,18 +33,13 @@ function App() {
     })
   };
 
-  const labels = ["Name", "Generation", "Height", "Weight", "Type 1", "Type 2"]
-
+  const labels = ["Sprite", "Name", "Generation", "Height", "Weight", "Type 1", "Type 2"]
   return (
-
-    
     <div className="flex flex-col justify-center items-center w-full min-h-screen bg-gray-300">
-
       <div className="w-1/3 border border-gray-300 rounded-lg shadow-lg p-2 text-center">
         Guess the daily Pokémon! It's {pokemon?.name}.
       </div>
-  
-  
+      
       {finished ? '' : (
       <Select
         className="w-1/4 border border-gray-300 rounded-lg shadow-lg p-2 mt-4"
@@ -56,13 +51,13 @@ function App() {
       }
 
       <div className="w-2/3 mt-4">
-        <div className="grid grid-cols-6 gap-4 text-center font-semibold">
+        <div className="grid grid-cols-7 gap-4 text-center font-semibold">
           {labels.map((label, index) => (
             <h4 key={index} className="text-sm">{label}</h4>
           ))}
         </div>
   
-        <div className="grid grid-cols-6 gap-4">
+        <div className="grid grid-cols-7 gap-4">
           {choices.map((choice, rowIndex) =>
             choice ? (
               choice.name && (
@@ -73,7 +68,9 @@ function App() {
                   height={pokemon?.height || 0}
                   weight={pokemon?.weight || 0}
                   types={pokemon?.types || []}
-                  choice={choice}
+                  sprite={pokemon?.sprites?.front_default || ""}  
+                  choice={{...choice, sprite: choice.sprites?.front_default || "" // ✅ Add sprite field if missing
+                  }}
                 />
               )
             ) : []
