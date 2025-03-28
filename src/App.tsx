@@ -1,4 +1,3 @@
-import './App.css'
 import { useState } from 'react';
 import Select, { SingleValue } from 'react-select';
 import Guess from './components/Row/Row';
@@ -29,6 +28,14 @@ function App() {
     dropdownIndicator: (base: any) => ({
       ...base,
       display: 'none', 
+    }),
+    menu: (provided: any) => ({
+      ...provided,
+      textAlign: 'center'
+    }),
+    singleValue: (provided: any) => ({
+      ...provided,
+      textAlign: 'center'
     })
   };
 

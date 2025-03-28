@@ -3,7 +3,7 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        pixelify: ['PixelifySans', 'sans-serif']
+        pixelify: ["Pixelify Sans", 'sans-serif']
       }
     },
   },
