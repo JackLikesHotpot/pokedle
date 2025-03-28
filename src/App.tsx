@@ -1,6 +1,5 @@
 import './App.css'
-import { Pokemon, PokemonClient } from 'pokenode-ts'; // Import the Client
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import Select, { SingleValue } from 'react-select';
 import Guess from './components/Row/Row';
 import { usePokemonGame } from "./hooks/usePokemonGame";
@@ -35,9 +34,9 @@ function App() {
 
   const labels = ["Sprite", "Name", "Generation", "Height", "Weight", "Type 1", "Type 2"]
   return (
-    <div className="flex flex-col justify-center items-center w-full min-h-screen bg-gray-300">
-      <div className="w-1/3 border border-gray-300 rounded-lg shadow-lg p-2 text-center">
-        Guess the daily Pokémon! It's {pokemon?.name}.
+    <div className="flex flex-col items-center w-full h-screen justify-start bg-gray-200 fixed top-0 left-0">
+      <div className="border border-gray-300 rounded-lg shadow-lg p-2 text-center mt-4">
+        <h1 className='text-3xl font-pixelify'>Guess the daily Pokémon! <br/><br/> It's {pokemon?.name}.</h1>
       </div>
       
       {finished ? '' : (
@@ -50,17 +49,15 @@ function App() {
       />)
       }
 
-      <div className="w-2/3 mt-4">
-        <div className="grid grid-cols-7 gap-4 text-center font-semibold">
-          {labels.map((label, index) => (
-            <h4 key={index} className="text-sm">{label}</h4>
-          ))}
-        </div>
-  
-        <div className="grid grid-cols-7 gap-4">
+<div className="w-2/3 mt-60 fixed">
+  <div className="grid grid-cols-7 gap-4">
+    {choices.length > 0 ? labels.map((label, index) => (
+        <h4 key={index} className="text-sm w-full font-semibold sm:pl-2">{label}</h4>
+    )): ''}
+    
           {choices.map((choice, rowIndex) =>
-            choice ? (
-              choice.name && (
+          // ignores undefined
+            choice ? (choice.name && (
                 <Guess
                   key={rowIndex}
                   name={pokemon?.name || ""}
@@ -69,8 +66,7 @@ function App() {
                   weight={pokemon?.weight || 0}
                   types={pokemon?.types || []}
                   sprite={pokemon?.sprites?.front_default || ""}  
-                  choice={{...choice, sprite: choice.sprites?.front_default || "" // ✅ Add sprite field if missing
-                  }}
+                  choice={{...choice, sprite: choice.sprites?.front_default || ""}}
                 />
               )
             ) : []

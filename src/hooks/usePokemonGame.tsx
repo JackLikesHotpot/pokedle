@@ -13,14 +13,14 @@ export const usePokemonGame = () => {
     try {
       const response = await api.getPokemonById(Math.floor(Math.random() * 386) + 1)
       setPokemon(response)
-      setChoices([])
+      // setChoices([])
     }
     catch (error) {
       console.log(error)
     }
   }
 
-  // if choices reaches x numebr then mark game as finished
+  // if choices reaches x number then mark game as finished
   useEffect(() => {
     const lastChoice = choices[choices.length - 1]
     if (lastChoice) {
@@ -29,7 +29,7 @@ export const usePokemonGame = () => {
       }
     }
 
-    if (choices.length === 6) {
+    if (choices.length === 10) {
       setFinished(true)
     }
   }, [choices, pokemon])
