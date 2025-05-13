@@ -20,7 +20,7 @@ const Card: React.FC<CardType> = ({ value, colour }) => {
 
   return (
     <div
-      className={`card w-28 h-28 flex justify-center items-center
+      className={`card w-28 h-28 flex justify-center items-center text-center
         transition-colors duration-600 ease-in-out
 
         ${isVisible ? 'opacity-100' : 'opacity-0'}

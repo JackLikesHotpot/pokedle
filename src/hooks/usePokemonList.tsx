@@ -5,8 +5,9 @@ import { capitaliseFirstLetter } from "../helpers/capitaliseFirstLetter";
 const api = new PokemonClient();
 
 export const usePokemonList = () => {
-  const [names, setNames] = useState<{ label: string; value: string }[]>([]);useEffect(() => {
-    
+  const [names, setNames] = useState<{ label: string; value: string }[]>([]);
+  
+  useEffect(() => {
     const fetchPokemonList = async () => {
       try {
         const list = await api.listPokemons(0, 386);
